@@ -6,5 +6,6 @@ export type AuthenticationParams = {
 }
 
 export interface Authentication {
+  params?: AuthenticationParams
   auth (params: AuthenticationParams): Promise<AccountModel>
 }
