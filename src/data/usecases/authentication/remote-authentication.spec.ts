@@ -2,7 +2,7 @@ import { RemoteAuthentication } from './remote-authentication'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpPostClientSpy } from '@/data/tests'
 import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
-import { mockAccountModel, mockAuthentication } from '@/domain/test'
+import { mockAccountModel, mockAuthenticationModel } from '@/domain/test'
 import { AuthenticationParams } from '@/domain/usecases'
 import { AccountModel } from '@/domain/models'
 import faker from 'faker'
@@ -25,13 +25,13 @@ describe('RemoteAuthentication', () => {
   test('Should call HttpClient with correct URL', async () => {
     const url = faker.internet.url()
     const { sut, httpPostClientSpy } = makeSut(url)
-    await sut.auth(mockAuthentication())
+    await sut.auth(mockAuthenticationModel())
     expect(httpPostClientSpy.url).toBe(url)
   })
 
   test('Should call HttpClient with correct body', async () => {
     const { sut, httpPostClientSpy } = makeSut()
-    const authenticationParams = mockAuthentication()
+    const authenticationParams = mockAuthenticationModel()
     await sut.auth(authenticationParams)
     expect(httpPostClientSpy.body).toEqual(authenticationParams)
   })
@@ -41,7 +41,7 @@ describe('RemoteAuthentication', () => {
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.unauthorized
     }
-    const promise = sut.auth(mockAuthentication())
+    const promise = sut.auth(mockAuthenticationModel())
     await expect(promise).rejects.toThrow(new InvalidCredentialsError())
   })
 
@@ -50,7 +50,7 @@ describe('RemoteAuthentication', () => {
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.badRequest
     }
-    const promise = sut.auth(mockAuthentication())
+    const promise = sut.auth(mockAuthenticationModel())
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
@@ -59,7 +59,7 @@ describe('RemoteAuthentication', () => {
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.notFount
     }
-    const promise = sut.auth(mockAuthentication())
+    const promise = sut.auth(mockAuthenticationModel())
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
@@ -68,7 +68,7 @@ describe('RemoteAuthentication', () => {
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.serverError
     }
-    const promise = sut.auth(mockAuthentication())
+    const promise = sut.auth(mockAuthenticationModel())
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
@@ -79,7 +79,7 @@ describe('RemoteAuthentication', () => {
       statusCode: HttpStatusCode.ok,
       body: httpResult
     }
-    const account = await sut.auth(mockAuthentication())
+    const account = await sut.auth(mockAuthenticationModel())
     expect(account).toEqual(httpResult)
   })
 })
