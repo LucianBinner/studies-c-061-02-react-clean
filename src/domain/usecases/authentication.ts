@@ -7,5 +7,6 @@ export type AuthenticationParams = {
 
 export interface Authentication {
   params?: AuthenticationParams
+  callsCount?: number
   auth (params: AuthenticationParams): Promise<AccountModel>
 }
