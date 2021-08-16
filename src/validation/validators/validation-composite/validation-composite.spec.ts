@@ -1,0 +1,13 @@
+import { mockFieldValidation } from '@/validation/test/mock-field-validation'
+import { ValidationComposite } from './validation-composite'
+
+describe('ValidationComposite', () => {
+  test('Should return error if any validation fails', () => {
+    const fieldValidationSpy = mockFieldValidation('any_field')
+    const fieldValidationSpyTwo = mockFieldValidation('any_field')
+    fieldValidationSpyTwo.error = new Error('any_error_message')
+    const sut = new ValidationComposite([fieldValidationSpy, fieldValidationSpyTwo])
+    const error = sut.validate('any_field', 'any_value')
+    expect(error).toBe('any_error_message')
+  })
+})
