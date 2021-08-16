@@ -1,4 +1,4 @@
-import { FieldValidation } from '../protocols/field-validation'
+import { FieldValidation } from '@/validation/protocols/field-validation'
 
 export const mockFieldValidation = (field: string): FieldValidation => {
   class FieldValidationSpy implements FieldValidation {

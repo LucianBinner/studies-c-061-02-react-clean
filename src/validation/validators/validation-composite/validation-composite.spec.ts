@@ -1,5 +1,5 @@
 import { FieldValidation } from '@/validation/protocols/field-validation'
-import { mockFieldValidation } from '@/validation/test/mock-field-validation'
+import { mockFieldValidation } from '@/validation/test'
 import { ValidationComposite } from './validation-composite'
 import faker from 'faker'
 
