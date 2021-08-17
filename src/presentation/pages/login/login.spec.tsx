@@ -1,13 +1,12 @@
+import React from 'react'
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
 import { InvalidCredentialsError } from '@/domain/errors'
-import { Authentication } from '@/domain/usecases'
-import { mockAuthentication, mockValidation } from '@/presentation/test'
+import { Login } from '@/presentation/pages'
+import { AuthenticationSpy, ValidationStub } from '@/presentation/test'
 import { cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 import faker from 'faker'
 import 'jest-localstorage-mock'
-import React from 'react'
-import { Login } from '@/presentation/pages'
-import { Router } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
 
 const populateEmailField = (
   sut: RenderResult,
@@ -65,7 +64,7 @@ const testButtonIsDisabled = (sut: RenderResult, fieldName: string, isDisabled: 
 
 type SutTypes = {
   sut: RenderResult
-  authenticationSpy: Authentication
+  authenticationSpy: AuthenticationSpy
 }
 
 type SutParams = {
@@ -75,8 +74,8 @@ type SutParams = {
 const history = createMemoryHistory({ initialEntries: ['/login'] })
 
 const makeSut = (params?: SutParams): SutTypes => {
-  const authenticationSpy = mockAuthentication()
-  const validationStub = mockValidation()
+  const authenticationSpy = new AuthenticationSpy()
+  const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
   const sut = render(
     <Router history={history}>
