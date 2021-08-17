@@ -9,7 +9,8 @@
     "test:clear": "jest --clearCache",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage"
+    "test:ci": "npm test -- --coverage",
+    "check": "npm-check -u -s"
   },
   "keywords": [],
   "author": "",

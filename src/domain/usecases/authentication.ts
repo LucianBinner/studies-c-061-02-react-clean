@@ -9,5 +9,5 @@ export interface Authentication {
   params?: AuthenticationParams
   callsCount?: number
   account?: AccountModel
-  auth (params: AuthenticationParams): Promise<AccountModel>
+  auth: (params: AuthenticationParams) => Promise<AccountModel>
 }
