@@ -5,7 +5,7 @@ import { cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-libr
 import faker from 'faker'
 import 'jest-localstorage-mock'
 import React from 'react'
-import Login from './login'
+import { Login } from '@/presentation/pages'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 
