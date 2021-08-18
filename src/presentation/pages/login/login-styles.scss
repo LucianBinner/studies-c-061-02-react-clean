@@ -23,17 +23,9 @@
       text-transform: uppercase;
     }
     
-    .submit {
+    button {
       margin-top: 32px;
-
-      &:disabled {
-        background-color: $disabled-background;
-        color: $disabled-color;
-
-        &:hover {
-          opacity: 1;
-        }
-      }
+      width: 100%;
     }
 
     .link {
