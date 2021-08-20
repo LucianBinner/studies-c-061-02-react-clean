@@ -43,7 +43,6 @@ describe('Login', () => {
   it('Should present InvalidCredentialsError on 401', () => {
     Http.mockInvalidCredentialsError()
     simulateValidSubmit()
-    cy.getByTestId('error-wrap')
     FormHelper.testMainError('Credenciais inválidas')
     FormHelper.testUrl('/login')
   })
