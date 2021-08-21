@@ -10,6 +10,7 @@ import faker from 'faker'
 
 export class HttpGetClientSpy<R> implements HttpGetClient<R> {
   url: string
+  body?: any
   response: HttpResponse<R> = {
     statusCode: HttpStatusCode.ok
   }
