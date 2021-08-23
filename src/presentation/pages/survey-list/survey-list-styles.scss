@@ -68,7 +68,7 @@
             background-color: $primary-light;
             color: $white;
             border-radius: 8px;
-            margin-left: 24px;
+            margin: 40px 0 40px 24px;
             align-items: center;
             align-self: center;
             justify-content: center;
@@ -95,6 +95,7 @@
             font-size: 18px;
             margin: 24px;
             align-self: center;
+            flex-grow: 1;
           }
         }
 
@@ -110,6 +111,20 @@
           &:hover {
             background-color: $primary-dark;
           }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .surveyListWrap {
+    .contentWrap {
+      ul {
+        flex-direction: column;
+  
+        li {
+          flex-basis: 100%;
         }
       }
     }
