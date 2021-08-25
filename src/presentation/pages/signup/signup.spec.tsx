@@ -1,5 +1,5 @@
 import React from 'react'
-import SignUp from './signup'
+import { SignUp } from '@/presentation/pages'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
