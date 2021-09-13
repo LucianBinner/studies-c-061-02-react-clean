@@ -1,13 +1,14 @@
-import { Router } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
 import { InvalidCredentialsError } from '@/domain/errors'
-import { Login } from '@/presentation/pages'
-import { AuthenticationSpy, ValidationStub, Helper } from '@/presentation/test'
-import { fireEvent, render, waitFor, screen } from '@testing-library/react'
+import { AuthenticationSpy } from '@/domain/test'
+import { Authentication } from '@/domain/usecases'
 import { ApiContext } from '@/presentation/contexts'
-import { AccountModel } from '@/domain/models'
-import React from 'react'
+import { Login } from '@/presentation/pages'
+import { Helper, ValidationStub } from '@/presentation/test'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import faker from 'faker'
+import { createMemoryHistory } from 'history'
+import React from 'react'
+import { Router } from 'react-router-dom'
 
 const simulateValidSubmit = async (
   email: string = faker.internet.email(),
@@ -22,7 +23,7 @@ const simulateValidSubmit = async (
 
 type SutTypes = {
   authenticationSpy: AuthenticationSpy
-  setCurrentAccountMock: (account: AccountModel) => void
+  setCurrentAccountMock: (account: Authentication.Model) => void
 }
 
 type SutParams = {
