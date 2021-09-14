@@ -1,4 +1,4 @@
-import { HttpGetClient, HttpGetParams, HttpPostClient, HttpPostParams, HttpResponse } from '@/data/protocols/http'
+import { HttpGetClient, HttpGetParams, HttpPostClient, HttpPostParams, HttpResponse, HttpStatusCode } from '@/data/protocols/http'
 import axios, { AxiosResponse } from 'axios'
 
 export class AxiosHttpClient implements HttpPostClient, HttpGetClient {
@@ -23,6 +23,11 @@ export class AxiosHttpClient implements HttpPostClient, HttpGetClient {
   }
 
   private adapt (axiosResponse: AxiosResponse): HttpResponse {
+    if (!axiosResponse) {
+      return {
+        statusCode: HttpStatusCode.forbidden
+      }
+    }
     return {
       statusCode: axiosResponse.status,
       body: axiosResponse.data
