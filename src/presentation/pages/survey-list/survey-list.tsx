@@ -4,7 +4,7 @@ import { SurveyContext, List, Error } from './components'
 import { Footer, Header } from '@/presentation/components'
 import { LoadSurveyList } from '@/domain/usecases'
 import { AccessDeniedError } from '@/domain/errors'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { ApiContext } from '@/presentation/contexts'
 
 type Props = {
