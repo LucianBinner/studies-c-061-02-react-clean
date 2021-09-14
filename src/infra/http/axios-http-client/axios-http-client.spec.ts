@@ -2,6 +2,7 @@ import { AxiosHttpClient } from './axios-http-client'
 import { mockGetRequest, mockPostRequest } from '@/data/tests'
 import { mockAxios, mockHttpResponse } from '@/infra/test'
 import axios from 'axios'
+import { HttpStatusCode } from '@/data/protocols/http'
 
 jest.mock('axios')
 
@@ -63,6 +64,15 @@ describe('AxiosHttpClient', () => {
       expect(httpResponse).toEqual({
         statusCode: axiosResponse.status,
         body: axiosResponse.data
+      })
+    })
+
+    test('Should return invalid response on axios.get', async () => {
+      const { sut, mockedAxios } = makeSut()
+      mockedAxios.get.mockImplementation(() => undefined)
+      const httpResponse = await sut.get(mockGetRequest())
+      expect(httpResponse).toEqual({
+        statusCode: HttpStatusCode.forbidden
       })
     })
 
