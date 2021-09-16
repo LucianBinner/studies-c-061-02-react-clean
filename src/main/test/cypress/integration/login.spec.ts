@@ -1,6 +1,6 @@
-import * as Http from '../support/login-mocks'
-import * as FormHelper from '../support/form-helpers'
-import * as Helper from '../support/helpers'
+import * as Http from '../utils/http-mocks'
+import * as FormHelper from '../utils/form-helpers'
+import * as Helper from '../utils/helpers'
 import faker from 'faker'
 
 const populateFields = (): void => {
@@ -11,6 +11,18 @@ const populateFields = (): void => {
 const simulateValidSubmit = (): void => {
   populateFields()
   cy.getByTestId('submit').click()
+}
+
+const path = /login/
+
+const mockInvalidCredentialsError = (): void => Http.mockUnauthorizedError(path)
+
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'POST')
+
+const mockSuccess = (): void => {
+  cy.fixture('account').then(account => {
+    Http.mockOk(path, 'POST', account)
+  })
 }
 
 describe('Login', () => {
@@ -46,21 +58,21 @@ describe('Login', () => {
   })
 
   it('Should present InvalidCredentialsError on 401', () => {
-    Http.mockInvalidCredentialsError()
+    mockInvalidCredentialsError()
     simulateValidSubmit()
     FormHelper.testMainError('Credenciais inválidas')
     Helper.testUrl('/login')
   })
 
   it('Should present UnexpectedError on default error cases', () => {
-    Http.mockUnexpectedError()
+    mockUnexpectedError()
     simulateValidSubmit()
     FormHelper.testMainError('Algo de errado aconteceu. Tente novamente mais tarde.')
     Helper.testUrl('/login')
   })
 
-  it('Should present save updateCurrentAccount if valid credentials are provided', () => {
-    Http.mockOk()
+  it('Should store account on localStorage if valid credentials are provided', () => {
+    mockSuccess()
     simulateValidSubmit()
     cy.getByTestId('error-wrap').should('not.have.descendants')
     Helper.testUrl('/')
@@ -68,14 +80,14 @@ describe('Login', () => {
   })
 
   it('Should prevent multiple submits', () => {
-    Http.mockOk()
+    mockSuccess()
     populateFields()
     cy.getByTestId('submit').dblclick()
     Helper.testHttpWaitAndCallsCount(1)
   })
 
   it('Should not call submit if form is invalid', () => {
-    Http.mockOk()
+    mockSuccess()
     cy.getByTestId('email').focus().type(faker.internet.email()).type('{enter}')
     Helper.testHttpCallsCount(0)
   })
