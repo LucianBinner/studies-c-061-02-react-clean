@@ -1,21 +1,12 @@
 const path = require('path')
 const { DefinePlugin } = require('webpack')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const common = require('./webpack.common')
+const { merge } = require('webpack-merge')
 
-module.exports = {
-  mode: 'development',
-  entry: './src/main/index.tsx',
-  output: {
-    path: path.join(__dirname, 'public/js'),
-    publicPath: '/public/js',
-    filename: 'bundle.js'
-  },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.scss'],
-    alias: {
-      '@': path.join(__dirname, 'src')
-    }
-  },
+module.exports = merge(common, {
+  mode: 'production',
   module: {
     rules: [
       {
@@ -26,7 +17,7 @@ module.exports = {
         test: /\.scss$/,
         use: [
           {
-            loader: 'style-loader'
+            loader: MiniCssExtractPlugin.loader
           }, {
             loader: 'css-loader',
             options: {
@@ -39,19 +30,19 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    writeToDisk: true,
-    historyApiFallback: true
-  },
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM'
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new DefinePlugin({
       'process.env.API_URL': JSON.stringify('http://localhost:5050/api')
+    }),
+    new HtmlWebPackPlugin({
+      template: path.join(__dirname, 'template.dev.html')
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'main-bundle-[hash].css'
     })
   ]
-}
+})
