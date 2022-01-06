@@ -9,6 +9,7 @@ export class AxiosHttpClient implements HttpPostClient, HttpGetClient {
     } catch (error) {
       axiosResponse = error.response
     }
+    console.log(axiosResponse)
     return this.adapt(axiosResponse)
   }
 

@@ -32,14 +32,16 @@ module.exports = merge(common, {
   },
   externals: {
     react: 'React',
-    'react-dom': 'ReactDOM'
+    axios: 'axios',
+    'react-dom': 'ReactDOM',
+    'react-router-dom': 'ReactRouterDOM'
   },
   plugins: [
     new DefinePlugin({
       'process.env.API_URL': JSON.stringify('http://localhost:5050/api')
     }),
     new HtmlWebPackPlugin({
-      template: path.join(__dirname, 'template.dev.html')
+      template: path.join(__dirname, 'template.prod.html')
     }),
     new MiniCssExtractPlugin({
       filename: 'main-bundle-[hash].css'

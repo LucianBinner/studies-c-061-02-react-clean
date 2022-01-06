@@ -30,7 +30,7 @@ module.exports = merge(common, {
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
+    contentBase: path.join(__dirname, 'dist'),
     writeToDisk: true,
     historyApiFallback: true
   },
