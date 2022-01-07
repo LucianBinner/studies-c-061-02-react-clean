@@ -6,13 +6,13 @@
   "scripts": {
     "start": "node index",
     "dev": "webpack server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
+    "build": "webpack --config webpack.dev.js",
     "test": "cross-env NODE_ICU_DATA=node_modules/full-icu jest --passWithNoTests --no-cache --runInBand",
     "test:clear": "jest --clearCache",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
-    "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
+    "test:coveralls": "npm run test:ci && cat ${__COVERAGE_PATH}'/lcov.info' | coveralls",
     "test:cypress": "cypress open",
     "check": "npm-check -u -s"
   },
